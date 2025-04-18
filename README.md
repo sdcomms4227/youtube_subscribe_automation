@@ -13,7 +13,7 @@ YouTube 채널 구독을 자동화하는 웹 애플리케이션입니다. Google
 
 1. 저장소 클론:
 ```bash
-git clone [저장소 URL]
+git clone https://github.com/sdcomms4227/youtube_subscribe_automation.git
 cd youtube_subscribe_automation
 ```
 
