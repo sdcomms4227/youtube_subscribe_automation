@@ -33,3 +33,4 @@ token.json
 *.tmp
 *.temp
 .cache/ 
+.vercel
