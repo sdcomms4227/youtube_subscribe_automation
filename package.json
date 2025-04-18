@@ -1,0 +1,17 @@
+{
+  "name": "youtube-subscribe-automation",
+  "version": "1.0.0",
+  "description": "Automation tool for subscribing to YouTube channels",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "dependencies": {
+    "googleapis": "^128.0.0",
+    "@google-cloud/local-auth": "^2.1.0",
+    "express": "^4.18.2",
+    "ejs": "^3.1.9",
+    "express-session": "^1.17.3"
+  },
+  "type": "module"
+} 
