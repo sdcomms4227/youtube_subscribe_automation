@@ -1,13 +1,22 @@
-# YouTube 구독 자동화 웹 애플리케이션
+# YouTube 구독 자동화
 
-YouTube 채널 구독을 자동화하는 웹 애플리케이션입니다. Google OAuth2를 사용하여 사용자 인증을 처리하고, YouTube Data API를 통해 채널 구독을 관리합니다.
+YouTube 채널을 쉽게 구독할 수 있는 웹 애플리케이션입니다. Google OAuth2.0을 사용하여 사용자 인증을 처리하고, YouTube Data API v3를 통해 채널 구독 기능을 제공합니다.
 
 ## 주요 기능
 
-- 웹 기반 인터페이스로 쉽게 사용 가능
-- Google OAuth2를 통한 안전한 인증
-- 채널 URL을 통한 구독 관리
-- 구독 상태 실시간 확인
+- Google 계정을 통한 OAuth 2.0 인증
+- YouTube 채널 URL 또는 이름으로 채널 검색
+- 원클릭으로 채널 구독
+- 세션 기반 사용자 인증 관리
+
+## 기술 스택
+
+- Node.js
+- Express.js
+- EJS 템플릿 엔진
+- Google OAuth 2.0
+- YouTube Data API v3
+- Vercel (배포)
 
 ## 설치 방법
 
@@ -22,53 +31,86 @@ cd youtube_subscribe_automation
 npm install
 ```
 
-3. Google Cloud Console 설정:
-   - [Google Cloud Console](https://console.cloud.google.com/)에서 새 프로젝트 생성
-   - YouTube Data API v3 활성화
+3. 환경 변수 설정:
+`.env` 파일을 생성하고 다음 변수들을 설정:
+```env
+GOOGLE_CLIENT_ID=your_client_id
+GOOGLE_CLIENT_SECRET=your_client_secret
+REDIRECT_URI=http://localhost:3000/auth/google/callback
+SESSION_SECRET=your_session_secret
+NODE_ENV=development
+```
+
+## Google Cloud Console 설정
+
+1. [Google Cloud Console](https://console.cloud.google.com/)에서 새 프로젝트 생성
+
+2. OAuth 동의 화면 설정:
+   - API 및 서비스 > OAuth 동의 화면
+   - 앱 이름, 사용자 지원 이메일 등 기본 정보 입력
+   - 개인정보처리방침 및 서비스 약관 URL 추가
+
+3. 사용자 인증 정보 설정:
+   - API 및 서비스 > 사용자 인증 정보
    - OAuth 2.0 클라이언트 ID 생성
-   - `credentials.json` 파일을 프로젝트 루트 디렉토리에 저장
+   - 승인된 리디렉션 URI 설정
 
-## 사용 방법
+4. API 활성화:
+   - YouTube Data API v3 활성화
 
-1. 애플리케이션 실행:
+## 로컬 개발 환경 실행
+
 ```bash
 npm start
 ```
+서버가 http://localhost:3000 에서 실행됩니다.
 
-2. 웹 브라우저에서 `http://localhost:3000` 접속
+## Vercel 배포
 
-3. Google 계정으로 로그인
-
-4. 구독하고 싶은 채널의 URL을 입력하고 구독 버튼 클릭
-
-## 프로젝트 구조
-
-```
-youtube_subscribe_automation/
-├── src/
-│   ├── index.js          # 메인 애플리케이션 파일
-│   └── views/
-│       └── index.ejs     # 메인 웹 페이지 템플릿
-├── credentials.json      # Google OAuth 인증 정보
-├── token.json           # OAuth 토큰 저장
-├── package.json         # 프로젝트 의존성 및 스크립트
-└── README.md           # 프로젝트 설명
+1. Vercel CLI 설치:
+```bash
+npm install -g vercel
 ```
 
-## 보안 주의사항
+2. 배포:
+```bash
+vercel
+```
 
-- `credentials.json`과 `token.json` 파일은 절대 공개 저장소에 커밋하지 마세요
-- `.gitignore` 파일에 인증 관련 파일들이 포함되어 있습니다
-- OAuth 토큰은 주기적으로 갱신되어야 합니다
+3. 프로덕션 배포:
+```bash
+vercel --prod
+```
 
-## 기술 스택
+## 환경 변수 설정 (Vercel)
 
-- Node.js
-- Express.js
-- EJS (템플릿 엔진)
-- Google OAuth2
-- YouTube Data API v3
+Vercel 대시보드에서 다음 환경 변수들을 설정:
+- `GOOGLE_CLIENT_ID`
+- `GOOGLE_CLIENT_SECRET`
+- `REDIRECT_URI`
+- `SESSION_SECRET`
+- `NODE_ENV=production`
+
+## API 엔드포인트
+
+- `GET /`: 메인 페이지
+- `GET /auth`: Google OAuth 인증 시작
+- `GET /auth/google/callback`: OAuth 콜백 처리
+- `POST /subscribe`: 채널 구독 처리
+- `GET /privacy`: 개인정보처리방침
+- `GET /terms`: 서비스 약관
+
+## 보안 및 개인정보
+
+- 사용자 데이터는 세션에만 저장되며 24시간 후 자동 삭제
+- HTTPS를 통한 안전한 데이터 전송
+- 필요한 최소한의 권한만 요청
 
 ## 라이선스
 
-MIT License 
+MIT License
+
+## 문의
+
+- 이메일: sdcomms4227@gmail.com
+- 웹사이트: https://youtube-subscribe-automation.vercel.app 
